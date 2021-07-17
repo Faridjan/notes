@@ -1,7 +1,4 @@
 # Debian Server Set Up
-In this guide we will set up clean Debian server for PHP projects. We will configure secure SSH connection, install from Debian repositories and from sources all needed packages and ware it together for working PHP projects.
-
-[Youtube video guide (in Russian)](https://www.youtube.com/watch?v=LvvSlljb8Yw)
 
 ## Setup SSH
 
