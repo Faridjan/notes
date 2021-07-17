@@ -1,5 +1,4 @@
-# Debian Server Set Up for LAMP Server (Apache, PHP, MariaDB)
-
+# Debian Server Set Up
 In this guide we will set up clean Debian server for PHP projects. We will configure secure SSH connection, install from Debian repositories and from sources all needed packages and ware it together for working PHP projects.
 
 [Youtube video guide (in Russian)](https://www.youtube.com/watch?v=LvvSlljb8Yw)
@@ -8,60 +7,51 @@ In this guide we will set up clean Debian server for PHP projects. We will confi
 
 ```
 sudo apt-get update ; \
-sudo apt-get install -y vim mosh tmux htop git curl wget unzip zip gcc build-essential make
+sudo apt-get install -y vim mosh htop git curl wget unzip zip gcc build-essential make
 ```
 
 Configure SSH:
 
 ```
-sudo adduser farid
-usermod -aG sudo farid
-su - farid
-
 sudo vim /etc/ssh/sshd_config
     AllowUsers farid
     PermitRootLogin no
     PasswordAuthentication no
-```
-
-Restart SSH server, change `www` user password:
-
-```
-sudo service ssh restart
-sudo passwd www
+    
+sudo adduser farid
+usermod -aG sudo farid
+su - farid
 ```
 
 ## ZSH
 
 ```
 sudo apt-get install -y zsh
-
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
-## MariaDB
-
+## Docker
 ```
-sudo apt install -y mariadb-server mariadb-client
-sudo mysql_secure_installation
-```
+sudo apt install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
 
-Login with `root` user is available just with `sudo`:
+sudo apt update
 
-```
-sudo mariadb -u root
-```
+sudo apt install docker-ce
+sudo usermod -aG docker ${USER}
 
-So, create database and user and give him privileges to new database:
-
-```
-sudo mariadb -u root
-CREATE DATABASE new_db_name COLLATE 'utf8_general_ci';
-CREATE USER new_db_user IDENTIFIED BY 'some_password';
-GRANT ALL privileges ON new_db_name .* TO new_db_user;
+id -nG
 ```
 
-## Apache, PHP
+Docker-compose:
+```
+sudo curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+```
+
+
+## Apache
 
 Install Apache, create `code` directory in user home directory:
 
