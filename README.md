@@ -18,6 +18,11 @@ sudo vim /etc/ssh/sshd_config
 sudo adduser farid
 usermod -aG sudo farid
 su - farid
+
+mkdir ~/.ssh
+vim ~/.ssh/authorized_keys 
+
+ssh newuser@server_address
 ```
 
 ## ZSH
