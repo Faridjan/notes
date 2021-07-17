@@ -15,6 +15,10 @@ sudo vim /etc/ssh/sshd_config
     PermitRootLogin no
     PasswordAuthentication no
     
+systemctl restart sshd
+service sshd restart
+/etc/init.d/ssh restart
+    
 sudo adduser farid
 usermod -aG sudo farid
 su - farid
