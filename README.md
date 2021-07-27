@@ -46,6 +46,10 @@ sudo apt update
 sudo apt install docker-ce
 sudo usermod -aG docker ${USER}
 
+
+sudo usermod -aG   docker   $USER
+sudo    newgrp   docker
+
 id -nG
 ```
 
